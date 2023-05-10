@@ -6,6 +6,7 @@ const app = express();
 
 // middleware
 app.use(cors());
+app.use(express.json());
 
 // data 
 const users = [
@@ -20,8 +21,16 @@ app.get('/', (req, res) => {
 
 app.get('/users', (req, res) => {
     res.send(users);
-    console.log(users);
 });
+
+app.post('/users', (req, res) => {
+    console.log('Post Api hitting...');
+
+    const newUser = req.body;
+    newUser.id = users.length + 1;
+    users.push(newUser);
+    res.send(newUser);
+})
 
 app.listen(port, () => {
     console.log(`Server is running on Port: ${port}`);
